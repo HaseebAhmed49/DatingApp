@@ -1,3 +1,8 @@
+.vscode
+bin
+obj
+*.db
+
 # globs
 Makefile.in
 *.userprefs

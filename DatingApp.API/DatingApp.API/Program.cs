@@ -10,6 +10,8 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<DataContext>(options => options.UseSqlite("Name=SQLLiteDBmacOS"));
 
 builder.Services.AddCors();
+
+builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
