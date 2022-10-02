@@ -10,12 +10,29 @@
     <li class="nav-item">
       <a class="nav-link" href="#">Messages</a>
     </li>
+    <li class="nav-item">
+      <a class="nav-link" (click)="logout()" >Log Out</a>
+    </li>
   </ul>
-  <form #loginForm="ngForm" class="d-flex" (ngSubmit)="login()">
+
+  <div *ngIf="loggedIn()" class="dropdown">
+    <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+      Welcome User
+    </button>
+    <ul class="dropdown-menu">
+      <li><a class="dropdown-item" href="#"><i class="fa fa-user"></i>Edit Profile</a></li>
+      <li><a class="dropdown-item" href="#">Another action</a></li>
+      <li><a class="dropdown-item" href="#"><i class="fa fa-sign-out"></i>Something else here</a></li>
+    </ul>
+  </div>
+
+  <form *ngIf="!loggedIn()" #loginForm="ngForm" class="d-flex" (ngSubmit)="login()">
     <input class="form-control mr-sm-2" name="username" type="text" #username="ngModel"
     placeholder="Username" required [(ngModel)]="model.username">    
+    <br>
     <input class="form-control mr-sm-2" name="password" type="password" 
      placeholder="Password" required [(ngModel)]="model.password">
+    <br>
     <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
   </form>
 </nav>
