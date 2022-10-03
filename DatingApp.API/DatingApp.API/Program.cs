@@ -1,6 +1,9 @@
-﻿using System.Text;
+﻿using System.Net;
+using System.Text;
 using DatingApp.API.Data;
+using DatingApp.API.Helpers;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 
@@ -42,6 +45,25 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+}
+else
+{
+
+    // Global Exception Handler and 
+    app.UseExceptionHandler(builder =>
+    {
+        builder.Run(async context =>
+        {
+            context.Response.StatusCode = (int)HttpStatusCode.InternalServerError;
+
+            var error = context.Features.Get<IExceptionHandlerFeature>();
+            if(error != null)
+            {
+                context.Response.AddApplicationError(error.Error.Message);
+                await context.Response.WriteAsync(error.Error.Message);
+            }
+        });
+    });
 }
 
 app.UseCors(x=> x.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
