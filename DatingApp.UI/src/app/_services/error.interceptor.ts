@@ -8,31 +8,26 @@ export class ErrorInterceptor implements HttpInterceptor{
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
         return next.handle(req).pipe(
             catchError(error => {
-                if(error.status == 401)
-                {
+                if(error.status == 401){
                     return throwError(error.statusText);
                 }
-                if(error instanceof HttpErrorResponse)
-                {
+                if(error instanceof HttpErrorResponse){
                     const applicationError = error.headers.get('Application-Error');
-                    if(applicationError)
-                    {
+                    if(applicationError){
                         return throwError(applicationError);
                     }
                     const serverError = error.error;
                     let modelStateErrors ='';
                     if(serverError.errors && typeof serverError.errors == 'object'){
-                        for(const key in serverError.errors)
-                        {
-                            if(serverError.errors[key])
-                            {
+                        for(const key in serverError.errors){
+                            if(serverError.errors[key]){
                                 modelStateErrors += serverError.errors[key] + '\n';
                             }
                         }
                     }
-                    return throwError(modelStateErrors || serverError.error || 'Server Error');
+                    return throwError(modelStateErrors || serverError.error);
                 }
-                return throwError('Server Error 2');
+                return throwError("Server Error");
             })
         );
     }    
