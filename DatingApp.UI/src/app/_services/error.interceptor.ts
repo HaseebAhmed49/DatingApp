@@ -27,7 +27,8 @@ export class ErrorInterceptor implements HttpInterceptor{
                     }
                     return throwError(modelStateErrors || serverError.error);
                 }
-                return throwError("Server Error");
+                return throwError(error.error.message + " " + error.message + " " +error.catchError );
+
             })
         );
     }    
