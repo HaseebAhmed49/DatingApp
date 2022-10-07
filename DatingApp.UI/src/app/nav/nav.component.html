@@ -29,9 +29,11 @@
     <input class="form-control mr-sm-2" name="username" type="text" #username="ngModel"
     placeholder="Username" required [(ngModel)]="model.username">    
     <br>
+     | 
     <input class="form-control mr-sm-2" name="password" type="password" 
      placeholder="Password" required [(ngModel)]="model.password">
     <br>
+  |
     <button [disabled]="!loginForm.valid" class="btn btn-success my-2 my-sm-0" type="submit">Login</button>
   </form>
 </div>
