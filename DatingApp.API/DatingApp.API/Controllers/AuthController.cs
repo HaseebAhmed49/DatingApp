@@ -80,8 +80,13 @@ namespace DatingApp.API.Controllers
                 {
                     token = tokenHandler.WriteToken(token)
                 });
+        }
 
-
+        [HttpDelete("delete")]
+        public async Task<IActionResult> Delete()
+        {
+            var result = await _repo.DeleteAllUser();
+            return Ok(result);
         }
     }
 }

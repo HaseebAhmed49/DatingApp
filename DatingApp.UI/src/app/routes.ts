@@ -15,8 +15,8 @@ export const appRoutes: Routes =[
         children:[
             { path:'members', component :MemberListComponent,canActivate:[AuthGuard]},
             { path:'messages', component :MessagesComponent},
-            { path:'lists', component :ListsComponent}       
+            { path:'lists', component :ListsComponent}
         ]
     },
-    { path:'**', redirectTo : '',pathMatch:'full'}    
+    { path:'**', redirectTo : '',pathMatch:'full'}
 ];

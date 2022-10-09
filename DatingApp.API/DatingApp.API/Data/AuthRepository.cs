@@ -64,6 +64,22 @@ namespace DatingApp.API.Data
                 return true;
             return false;
         }
+
+        public async Task<string> DeleteAllUser()
+        {
+            var users = await _context.Users.ToListAsync();
+            if(users.Count>0)
+            {
+                foreach (var item in users)
+                {
+                    _context.Users.Remove(item);
+                }
+                await _context.SaveChangesAsync();
+                return "Deleted all Users";
+            }
+            return "No User Found";
+
+        }
     }
 }
 
