@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using DatingApp.API.Data;
+using DatingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -32,8 +33,22 @@ namespace DatingApp.API.Controllers
         [HttpGet("id")]
         public async Task<IActionResult> GetUser(int id)
         {
-            var user = await _repo.GetUser(id);
-            return Ok(user);
+            try
+            {
+                var user = await _repo.GetUser(id);
+                return Ok(user);
+            }
+            catch(Exception ex)
+            {
+                return BadRequest("Error in Try");
+            }
+
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddUser()
+        {
+            return Ok(User);
         }
 
 
