@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using DatingApp.API.Data;
+using DatingApp.API.DTOs;
 using DatingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -17,9 +19,11 @@ namespace DatingApp.API.Controllers
     public class UserController : ControllerBase
     {
         private readonly IDatingRepository _repo;
+        private readonly IMapper _mapper;
 
-        public UserController(IDatingRepository repo)
+        public UserController(IDatingRepository repo, IMapper mapper)
         {
+            _mapper = mapper;
             _repo = repo;
         }
 
@@ -27,20 +31,24 @@ namespace DatingApp.API.Controllers
         public async Task<IActionResult> GetUsers()
         {
             var users = await _repo.GetUsers();
-            return Ok(users);
+
+            var usersToReturn = _mapper.Map<IEnumerable<UserForListDTO>>(users);
+            return Ok(usersToReturn);
         }
 
-        [HttpGet("id")]
+        [HttpGet("{id}")]
         public async Task<IActionResult> GetUser(int id)
         {
             try
             {
                 var user = await _repo.GetUser(id);
-                return Ok(user);
+
+                var userToReturn = _mapper.Map<UserForDetailsDTO>(user);
+                return Ok(userToReturn);
             }
             catch(Exception ex)
             {
-                return BadRequest("Error in Try");
+                return BadRequest("Error in Try \n" + ex.Message);
             }
 
         }

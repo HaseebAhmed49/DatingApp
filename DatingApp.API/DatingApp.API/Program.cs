@@ -18,6 +18,8 @@ builder.Services.AddDbContext<DataContext>(options => options.UseSqlite("Name=SQ
 
 builder.Services.AddCors();
 
+builder.Services.AddAutoMapper(typeof(DatingRepository).Assembly);
+
 builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 builder.Services.AddScoped<IDatingRepository, DatingRepository>();
