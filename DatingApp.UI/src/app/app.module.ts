@@ -21,7 +21,7 @@ import { MemberCardComponent } from './members/member-card/member-card.component
 import { MemberDetailComponent } from './members/member-detail/member-detail.component';
 import { MemberDetailResolver } from './_resolvers/member-detail.resolver';
 import { MemberListResolver } from './_resolvers/member-list.resolver';
-import { NgxGalleryModule } from 'ngx-gallery';
+import { NgxGalleryModule } from '../../ngx-gallery/projects/gallery/src/lib/ngx-gallery.module';
 
 
 export function tokenGetter(){
