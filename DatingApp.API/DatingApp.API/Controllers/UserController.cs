@@ -60,7 +60,6 @@ namespace DatingApp.API.Controllers
         }
 
 
-
     }
 }
 

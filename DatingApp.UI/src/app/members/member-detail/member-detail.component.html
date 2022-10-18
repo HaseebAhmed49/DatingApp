@@ -43,13 +43,22 @@
           <p>{{user?.interests}}</p>
         </tab>
         <tab heading="Photos">
-          <ngx-gallery [options]="galleryOptions!" [images]="galleryImages!" class="ngx-gallery"></ngx-gallery>
+          <section class="gallery">
+            <div class="container">
+              <img src="{{user?.photoURL}}" alt="{{user?.knownAs}}" id="preview"/>
+              <div class="img-container">
+                <div class="img-prev text-center">
+                  <div *ngFor="let photo of user?.photos" class="img-slide">
+                    <img src="{{photo.url}}" alt="{{photo.description}}" app-member-detail/>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
         </tab>
         <tab heading="Messages">
           <p>Messages will go here</p>
         </tab>
-
-
         </tabset>
       </div>
     </div>
