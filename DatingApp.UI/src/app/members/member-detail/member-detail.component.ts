@@ -15,7 +15,7 @@ export class MemberDetailComponent implements OnInit {
   constructor(private userService:UserService,
     private alertify:AlertifyService,
     private route:ActivatedRoute,
-    private el:ElementRef) { }
+    private el:ElementRef) {}
 
   ngOnInit() {
     this.route.data.subscribe(data => {
@@ -30,7 +30,12 @@ export class MemberDetailComponent implements OnInit {
        console.log(src);
        console.log(prev);
       // prev.src = src;
-      // this.el.nativeElement.parentElement.classList.add("active");
+      var imageSlide = document.getElementsByClassName("img-slide");
+      for(let i=0;i<imageSlide.length;i++){
+        imageSlide[i].classList.remove("active");
+      }
+      this.el.nativeElement.parentElement.classList.add("active");
+
     }
   
 
