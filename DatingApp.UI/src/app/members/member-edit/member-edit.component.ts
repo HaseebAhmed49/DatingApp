@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { User } from 'src/app/_models/User';
@@ -13,6 +13,12 @@ import { getTextOfJSDocComment } from 'typescript';
 export class MemberEditComponent implements OnInit {
   @ViewChild('editForm')
   editForm!: NgForm;
+  @HostListener('window:beforeunload',['$event'])
+  unloadNotification($event:any){
+    if(this.editForm.dirty){
+      $event.returnValue = true;
+    }
+  }
   user:any;
 
   constructor(private route:ActivatedRoute,private alertify:AlertifyService) { }
