@@ -26,7 +26,6 @@ import { MemberEditResolver } from './_resolvers/member-edit.resolver';
 import { AuthGuard } from './_guards/auth.guard';
 import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 
-
 export function tokenGetter(){
   return localStorage.getItem('token');
 }
