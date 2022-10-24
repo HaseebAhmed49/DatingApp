@@ -9,6 +9,7 @@ using CloudinaryDotNet.Actions;
 using DatingApp.API.Data;
 using DatingApp.API.DTOs;
 using DatingApp.API.Helpers;
+using DatingApp.API.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
@@ -65,13 +66,30 @@ namespace DatingApp.API.Controllers
                     var uploadParams = new ImageUploadParams()
                     {
                         File = new FileDescription(file.Name, stream),
-                        Transformation = new Transformation().Width(500).Height(500).Crop('fill').Gravity("face");
+                        Transformation = new Transformation()
+                        .Width(500).Height(500).Crop("fill").Gravity("face")
                     };
 
                     uploadResult = _cloudinary.Upload(uploadParams);
                 }
             }
+
+            photoForCreationDTO.Url = uploadResult.Uri.ToString();
+            photoForCreationDTO.PublicId = uploadResult.PublicId;
+
+            var photo = _mapper.Map<Photo>(photoForCreationDTO);
+
+            if (!userFromRepo.Photos.Any(u => u.IsMain))
+                photo.IsMain = true;
+
+            userFromRepo.Photos.Add(photo);
+
+            if(await _repo.SaveAll())
+            {
+                return Ok();
+            }
+
+            return BadRequest("Could not add the photo");
         }
     }
 }
-

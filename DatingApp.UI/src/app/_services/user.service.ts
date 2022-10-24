@@ -6,7 +6,7 @@ import { User } from '../_models/User';
 
 const httpOptoins = {
   headers:new HttpHeaders({
-    'Authorization':'Bearer ' + localStorage.getItem('token')
+    'Auth':'Bearer ' + localStorage.getItem('token')
   })
 };
 
@@ -19,6 +19,7 @@ export class UserService {
   constructor(private http:HttpClient) { }
 
   getUsers():Observable<User[]>{
+    console.log(localStorage.getItem('token'));
     return this.http.get<User[]>(this.baseUrl+'user',httpOptoins);
   }
 
