@@ -15,11 +15,20 @@ const httpOptoins = {
 })
 export class UserService {
   baseUrl= environment.apiUrl;
+  token = localStorage.getItem('token');
 
   constructor(private http:HttpClient) { }
 
   getUsers():Observable<User[]>{
-    console.log(localStorage.getItem('token'));
+    const httpHeaders = { 
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Access-Control-Allow-Origin': '*',
+        'Access-Control-Allow-Headers': 'Content-Type',
+        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
+        'Authorization': 'Bearer '+ this.token,
+      })};
+    console.log(localStorage.getItem('token'));    
     return this.http.get<User[]>(this.baseUrl+'user',httpOptoins);
   }
 
