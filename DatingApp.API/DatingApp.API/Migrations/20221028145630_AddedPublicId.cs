@@ -8,9 +8,6 @@ namespace DatingApp.API.Migrations
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Values");
-
             migrationBuilder.AddColumn<string>(
                 name: "PublicId",
                 table: "Photos",
@@ -24,19 +21,6 @@ namespace DatingApp.API.Migrations
             migrationBuilder.DropColumn(
                 name: "PublicId",
                 table: "Photos");
-
-            migrationBuilder.CreateTable(
-                name: "Values",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Values", x => x.Id);
-                });
         }
     }
 }

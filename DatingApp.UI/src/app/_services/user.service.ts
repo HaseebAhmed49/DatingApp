@@ -6,7 +6,7 @@ import { User } from '../_models/User';
 
 const httpOptoins = {
   headers:new HttpHeaders({
-    'Auth':'Bearer ' + localStorage.getItem('token')
+    'Authorization':'Bearer ' + localStorage.getItem('token')
   })
 };
 
@@ -15,20 +15,10 @@ const httpOptoins = {
 })
 export class UserService {
   baseUrl= environment.apiUrl;
-  token = localStorage.getItem('token');
 
   constructor(private http:HttpClient) { }
 
   getUsers():Observable<User[]>{
-    const httpHeaders = { 
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Access-Control-Allow-Origin': '*',
-        'Access-Control-Allow-Headers': 'Content-Type',
-        'Access-Control-Allow-Methods': 'GET,POST,OPTIONS,DELETE,PUT',
-        'Authorization': 'Bearer '+ this.token,
-      })};
-    console.log(localStorage.getItem('token'));    
     return this.http.get<User[]>(this.baseUrl+'user',httpOptoins);
   }
 
@@ -37,7 +27,7 @@ export class UserService {
   }
 
   updateUser(id:string, user:User){
-    console.log(id);
+    console.log(user);
     return this.http.put(this.baseUrl + 'user/'+id,user,httpOptoins);
   }
 }

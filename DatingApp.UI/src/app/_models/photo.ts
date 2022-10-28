@@ -4,5 +4,4 @@ export interface Photo {
     description:string;
     dateAdded:Date;
     isMain:boolean;
-    publicId:string
 }
