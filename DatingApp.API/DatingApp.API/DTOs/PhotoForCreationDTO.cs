@@ -5,7 +5,7 @@ namespace DatingApp.API.DTOs
     {
         public string? Url { get; set; }
 
-        public IFormFile? File { get; set; }
+        public IFormFile File { get; set; }
 
         public string? description { get; set; }
 

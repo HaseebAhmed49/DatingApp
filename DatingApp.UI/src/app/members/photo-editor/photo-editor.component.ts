@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { FileUploader } from 'ng2-file-upload';
+import { Photo } from 'src/app/_models/photo';
 import { AuthService } from 'src/app/_services/auth.service';
 import { environment } from 'src/environments/environment';
 
@@ -15,6 +16,7 @@ export class PhotoEditorComponent implements OnInit {
   uploader:FileUploader;
   hasBaseDropZoneOver:boolean;
   response:string;
+  file!: File;
 
   baseUrl= environment.apiUrl;
  
@@ -27,18 +29,6 @@ export class PhotoEditorComponent implements OnInit {
       removeAfterUpload: true,
       autoUpload: false,
       maxFileSize: 10 * 1024 * 1024,
-      disableMultipart: true, // 'DisableMultipart' must be 'true' for formatDataFunction to be called.
-      formatDataFunctionIsAsync: true,
-      formatDataFunction: async (item:any) => {
-        return new Promise( (resolve, reject) => {
-          resolve({
-            name: item._file.name,
-            length: item._file.size,
-            contentType: item._file.type,
-            date: new Date()
-          });
-        });
-      }
     });
 
     this.uploader.onAfterAddingFile = (file) => {file.withCredentials = false;};
@@ -47,9 +37,22 @@ export class PhotoEditorComponent implements OnInit {
  
     this.response = '';
  
-    this.uploader.response.subscribe( res => this.response = res );
+    this.uploader.response.subscribe( res => this.response = res );    
+  
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      if(response){
+        const res: Photo = JSON.parse(response);
+        const photo = {
+          id: res.id,
+          url: res.url,
+          dateAdded: res.dateAdded,
+          description: res.description,
+          isMain: res.isMain
+        };
+        this.photos.push(photo);
+      }
+    }
   }
-
   ngOnInit() {
   }
  
