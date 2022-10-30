@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { User } from '../_models/User';
 
-const httpOptoins = {
+const httpOptions = {
   headers:new HttpHeaders({
     'Authorization':'Bearer ' + localStorage.getItem('token')
   })
@@ -19,15 +19,20 @@ export class UserService {
   constructor(private http:HttpClient) { }
 
   getUsers():Observable<User[]>{
-    return this.http.get<User[]>(this.baseUrl+'user',httpOptoins);
+    return this.http.get<User[]>(this.baseUrl+'user',httpOptions);
   }
 
   getUser(id: string):Observable<User>{
-    return this.http.get<User>(this.baseUrl+'user/'+id,httpOptoins);    
+    return this.http.get<User>(this.baseUrl+'user/'+id,httpOptions);    
   }
 
   updateUser(id:string, user:User){
     console.log(user);
-    return this.http.put(this.baseUrl + 'user/'+id,user,httpOptoins);
+    return this.http.put(this.baseUrl + 'user/'+id,user,httpOptions);
+  }
+
+  setMainPhoto(userId:string,id:number)
+  {
+    return this.http.post(this.baseUrl + 'user/' + userId + '/photos/' + id + '/setMain',{},httpOptions);
   }
 }
