@@ -86,13 +86,15 @@ namespace DatingApp.API.Controllers
             photoForCreationDTO.Url = uploadResult.Uri.ToString();
             photoForCreationDTO.PublicId = uploadResult.PublicId;
             var photo = _mapper.Map<Photo>(photoForCreationDTO);
+            photo.UserId = userId;
+            photo.Description = "Dummy Description";
             if(!userFromRepo.Photos.Any(u => u.IsMain))
                 photo.IsMain = true;
             userFromRepo.Photos.Add(photo);
             if(await _repo.SaveAll())
             {
                 var photoToReturn = _mapper.Map<PhotoForReturnDTO>(photo);
-                return CreatedAtRoute("GetPhoto", new { id=photo.Id},photoToReturn);
+                return Ok(photoToReturn);
             }
             return BadRequest("Couldn't add the photo");
         }
