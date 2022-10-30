@@ -1,6 +1,7 @@
 import { Component, HostListener, OnInit, ViewChild } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
+import { Photo } from 'src/app/_models/photo';
 import { User } from 'src/app/_models/User';
 import { AlertifyService } from 'src/app/_services/alertify.service';
 import { AuthService } from 'src/app/_services/auth.service';
@@ -42,5 +43,9 @@ export class MemberEditComponent implements OnInit {
       },error =>{
         this.alertify.error(error);
       });
+  }
+
+  updateMainPhoto(photoUrl: any){
+    this.user.photoUrl = photoUrl; 
   }
 }
