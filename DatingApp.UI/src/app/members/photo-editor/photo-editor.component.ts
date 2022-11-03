@@ -44,19 +44,26 @@ export class PhotoEditorComponent implements OnInit {
  
     this.uploader.response.subscribe( res => this.response = res );    
   
-    // this.uploader.onSuccessItem = (item, response, status, headers) => {
-    //   if(response){
-    //     const res: Photo = JSON.parse(response);
-    //     const photo = {
-    //       id: res.id,
-    //       url: res.url,
-    //       dateAdded: res.dateAdded,
-    //       description: res.description,
-    //       isMain: res.isMain
-    //     };
-    //     this.photos.push(photo);
-    //   }
-    // }
+    this.uploader.onSuccessItem = (item, response, status, headers) => {
+      if(response){
+        const res: Photo = JSON.parse(response);
+        const photo = {
+          id: res.id,
+          url: res.url,
+          dateAdded: res.dateAdded,
+          description: res.description,
+          isMain: res.isMain
+        };
+        this.photos.push(photo);
+        if(photo.isMain)
+        {
+          this.authService.changeMemberPhoto(photo.url);  
+          this.authService.currentUser.photoUrl = photo.url;
+          localStorage.setItem('user',JSON.stringify(this.authService.currentUser));
+    
+        }
+      }
+    }
   }
   ngOnInit() {
   }
