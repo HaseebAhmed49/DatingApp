@@ -28,6 +28,8 @@ builder.Services.AddScoped<IAuthRepository, AuthRepository>();
 
 builder.Services.AddScoped<IDatingRepository, DatingRepository>();
 
+builder.Services.AddScoped<LogUserActivity>();
+
 // Authentication
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
