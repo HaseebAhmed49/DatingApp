@@ -29,7 +29,7 @@ import { PreventUnsavedChanges } from './_guards/prevent-unsaved-changes.guard';
 import { PhotoEditorComponent } from './members/photo-editor/photo-editor.component';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {NgPipesModule} from 'ngx-pipes';
 
 export function tokenGetter(){
   return localStorage.getItem('token');
@@ -47,7 +47,7 @@ export function tokenGetter(){
     MemberCardComponent,
     MemberDetailComponent,
     MemberEditComponent,
-    PhotoEditorComponent
+    PhotoEditorComponent,
    ],
   imports: [
     BrowserModule,
@@ -58,6 +58,7 @@ export function tokenGetter(){
     FileUploadModule,
     TabsModule.forRoot(),
     BsDatepickerModule.forRoot(),
+    NgPipesModule,
     RouterModule.forRoot(appRoutes),
     JwtModule.forRoot({
       config:{
