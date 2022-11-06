@@ -27,13 +27,13 @@ export class UserService {
       parameters = parameters.append('pageNumber',page);
       parameters = parameters.append('pageSize',itemsPerPage);
     }
-    return this.http.get<PaginatedResults<User[]>>(this.baseUrl+'user',
+    return this.http.get<User[]>(this.baseUrl+'user',
      {headers: httpOptions.headers,observe: 'response', params: parameters})
       .pipe(
         map(response => {
           paginatedResult.result = response.body;
           if(response.headers.get('Pagination')!=null){
-            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination'))
+            paginatedResult.pagination = JSON.parse(response.headers.get('Pagination') as string)
           }
           return paginatedResult;
         })
