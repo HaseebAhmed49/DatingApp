@@ -31,6 +31,7 @@ import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {NgPipesModule} from 'ngx-pipes';
 import { PaginationModule } from 'ngx-bootstrap/src/pagination';
+import { ButtonsModule } from 'ngx-bootstrap/buttons';
 
 export function tokenGetter(){
   return localStorage.getItem('token');
@@ -56,6 +57,7 @@ export function tokenGetter(){
     HttpClientModule,
     FormsModule,
     PaginationModule,
+    ButtonsModule.forRoot(),
     ReactiveFormsModule,
     FileUploadModule,
     TabsModule.forRoot(),

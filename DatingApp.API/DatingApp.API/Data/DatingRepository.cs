@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DatingApp.API.Data
 {
-    public class DatingRepository:IDatingRepository
+    public class DatingRepository : IDatingRepository
     {
         private readonly DataContext _context;
 
@@ -40,13 +40,14 @@ namespace DatingApp.API.Data
 
         public async Task<PagedList<User>> GetUsers(UserParams userParams)
         {
-            var users = _context.Users.Include(p => p.Photos).AsQueryable();
+            var users = _context.Users.Include(p => p.Photos)
+                .OrderByDescending(u => u.DateOfBirth).AsQueryable();
 
             users = users.Where(u => u.Id != userParams.UserId);
 
             users = users.Where(u => u.Gender == userParams.Gender);
 
-            if(userParams.MinAge != 18 || userParams.MaxAge != 99)
+            if (userParams.MinAge != 18 || userParams.MaxAge != 99)
             {
                 var minDOB = DateTime.Today.AddYears(-userParams.MaxAge - 1);
                 var maxDOB = DateTime.Today.AddYears(-userParams.MinAge);
@@ -54,14 +55,26 @@ namespace DatingApp.API.Data
                 users = users.Where(u => u.DateOfBirth >= minDOB && u.DateOfBirth <= maxDOB);
             }
 
-            return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize); ;
+                if (!string.IsNullOrEmpty(userParams.OrderBy))
+                {
+                    switch (userParams.OrderBy)
+                    {
+                        case "created":
+                            users = users.OrderByDescending(u => u.Created);
+                            break;
+                        default:
+                            users = users.OrderByDescending(u => u.DateOfBirth);
+                            break;
+                    }
+                }
+
+                return await PagedList<User>.CreateAsync(users, userParams.PageNumber, userParams.PageSize); ;
         }
 
-        public async Task<bool> SaveAll()
-        {
-            // > 0 means true (changes are saved) | = 0 means false (Changes are not saved)
-            return await _context.SaveChangesAsync() > 0;
+            public async Task<bool> SaveAll()
+            {
+                // > 0 means true (changes are saved) | = 0 means false (Changes are not saved)
+                return await _context.SaveChangesAsync() > 0;
+            }
         }
     }
-}
-
