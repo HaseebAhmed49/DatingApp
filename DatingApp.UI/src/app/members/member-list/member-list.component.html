@@ -8,7 +8,7 @@
   <div class="row">
     <form class="form-inline" #form="ngForm" (ngSubmit)="loadUsers()" novalidate>
       <div class="row">
-        <div class="col form-group">
+        <div class="col form-group" style="margin:10px">
           <div class="row">
             <label class="col" for="minAge">Age From</label>
             <input type="number" class="col form-control" style="" id="minAge"  
@@ -16,7 +16,7 @@
           </div>
         </div>
   
-        <div class="col form-group">
+        <div class="col form-group" style="margin:10px">
           <div class="row">
             <label class="col" for="maxAge">Age To</label>
             <input type="number" class="col form-control" style="" id="maxAge" 
@@ -24,7 +24,7 @@
           </div>
         </div>
   
-        <div class="col form-group">
+        <div class="col form-group" style="margin:10px">
           <div class="row"> 
             <label for="gender" class="col text-center">Show: </label>
             <select class="col form-control text-center" style="width: 130px" id="gender" 
@@ -38,7 +38,7 @@
         <button type="submit" class="col me-1 btn btn-primary" style="margin:10px">Apply Filters</button>
         <button type="button" class="col me-1 btn btn-info" (click)="resetFilters()" style="margin:10px">Reset Filter</button>
   
-        <div class="col me-1" >
+        <div class="col me-1" style="margin:10px">
           <div class="btn-group float-right" >
             <button type="button" name="orderBy" class="btn btn-primary"
              [(ngModel)]="userParams.orderBy" (click)="loadUsers()" btnRadio="dob">Date Of Birth</button>
