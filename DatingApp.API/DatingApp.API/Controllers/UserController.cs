@@ -59,6 +59,8 @@ namespace DatingApp.API.Controllers
         {
             try
             {
+                if (id < 0) return BadRequest("Id cant be negative");
+
                 var user = await _repo.GetUser(id);
 
                 var userToReturn = _mapper.Map<UserForDetailsDTO>(user);
@@ -81,7 +83,8 @@ namespace DatingApp.API.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> UpdateUser(int id, UserForUpdateDTO userForUpdateDTO)
         {
-            if(id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
+            if (id < 0) return BadRequest("Id cant be negative");
+            if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
             var userFromRepo = await _repo.GetUser(id);
@@ -95,6 +98,7 @@ namespace DatingApp.API.Controllers
         [HttpPost("{id}/like/{recipientId}")]
         public async Task<IActionResult> LikeUser(int id, int recipientId)
         {
+            if (id < 0) return BadRequest("Id cant be negative");
             if (id != int.Parse(User.FindFirst(ClaimTypes.NameIdentifier).Value))
                 return Unauthorized();
 
